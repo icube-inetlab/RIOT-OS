@@ -47,7 +47,7 @@ static void rx_xlb(void *arg, uint8_t data)
 int main(void)
 {
   uart_t dev_debug = UART_DEV(0);
-  uart_t dev_xlb3 = UART_DEV(1);
+  uart_t dev_xlb3 = UART_DEV(3);
   int res;
   uint32_t baud = 115200;
   puts("Hello World!");
