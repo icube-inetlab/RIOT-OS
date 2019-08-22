@@ -27,29 +27,37 @@
 #include "stdio_uart.h"
 #include "periph/uart.h"
 
+static uart_t dev_debug = UART_DEV(0);
+static uart_t dev_xlb = UART_DEV(2);
+static char* endl = "\r\n";
 
 static void rx_debug(void *arg, uint8_t data)
 {
   uart_t dev = (uart_t)arg;
-  if (dev == UART_DEV(0)) {
-    uart_write(UART_DEV(3), &data, 1);
+  if (dev == dev_debug) {
+    if(data == '\n'){
+      uart_write(dev_xlb, (uint8_t*)endl, 2);
+    }
+    else{
+      uart_write(dev_xlb, &data, 1);
+    }
   }
 }
 
 static void rx_xlb(void *arg, uint8_t data)
 {
   uart_t dev = (uart_t)arg;
-  if (dev == UART_DEV(3)) {
-    uart_write(UART_DEV(0), &data, 1);
+  if (dev == dev_xlb) {
+    uart_write(dev_debug, &data, 1);
   }
 }
 
 int main(void)
 {
-  uart_t dev_debug = UART_DEV(0);
-  uart_t dev_xlb3 = UART_DEV(3);
+
   int res;
-  uint32_t baud = 115200;
+  uint32_t baud_debug = 115200;
+  uint32_t baud_xlb = 115200;
   puts("Hello World!");
   printf("You are running RIOT on a(n) %s board.\n", RIOT_BOARD);
   printf("This board features a(n) %s MCU.\n\n", RIOT_MCU);
@@ -58,11 +66,10 @@ int main(void)
   XLBEE1_ON;
   XLBEE2_ON;
   XLBEE3_ON;
-
   /* initialize UARTs for redirection */
-  res = uart_init(UART_DEV(dev_xlb3), baud, rx_xlb, (void *)dev_xlb3);
+  res = uart_init(UART_DEV(dev_xlb), baud_xlb, rx_xlb, (void *)dev_xlb);
   if (res == UART_NOBAUD) {
-    printf("Error: Given baudrate (%u) not possible\n", (unsigned int)baud);
+    printf("Error: Given baudrate (%u) not possible\n", (unsigned int)baud_xlb);
     return 1;
   }
   else if (res != UART_OK) {
@@ -70,20 +77,18 @@ int main(void)
     return 1;
   }
 
-  printf("Success: Initialized UART_DEV(%i) at BAUD %li\n\n", dev_xlb3, baud);
+  printf("Success: Initialized UART_DEV(%i) at BAUD %li\n\n", dev_xlb, baud_xlb);
 
-  res = uart_init(UART_DEV(dev_debug), baud, rx_debug, (void *)dev_debug);
+  res = uart_init(UART_DEV(dev_debug), baud_debug, rx_debug, (void *)dev_debug);
   if (res == UART_NOBAUD) {
-    printf("Error: Given baudrate (%u) not possible\n", (unsigned int)baud);
+    printf("Error: Given baudrate (%u) not possible\n", (unsigned int)baud_debug);
     return 1;
   }
   else if (res != UART_OK) {
     puts("Error: Unable to initialize UART device");
     return 1;
   }
-  printf("Success: Initialized UART_DEV(%i) at BAUD %li\n\n", dev_debug, baud);
-
-
+  printf("Success: Initialized UART_DEV(%i) at BAUD %li\n\n", dev_debug, baud_debug);
 
   return 0;
 }
