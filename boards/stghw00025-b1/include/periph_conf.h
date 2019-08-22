@@ -217,16 +217,16 @@ static const uart_conf_t uart_config[] = {
         .irq = USART1_RX_IRQn
     },
     {
-        .dev = USART0,
+        .dev = USART4,
         .rx_pin = GPIO_PIN(PB, 8),
         .tx_pin = GPIO_PIN(PB, 7),
-        .loc = USART_ROUTELOC0_TXLOC_LOC4 |
-               USART_ROUTELOC0_TXLOC_LOC4,
+        .loc = USART_ROUTELOC0_TXLOC_LOC0 |
+               USART_ROUTELOC0_TXLOC_LOC0,
 #if EFM32_UART_MODES
         .mode = UART_MODE_8N1,
 #endif
-        .cmu = cmuClock_USART0,
-        .irq = USART0_RX_IRQn
+        .cmu = cmuClock_USART4,
+        .irq = USART4_RX_IRQn
     },
     {
         .dev = UART1,
@@ -245,7 +245,7 @@ static const uart_conf_t uart_config[] = {
 #define UART_NUMOF          ARRAY_SIZE(uart_config)
 #define UART_0_ISR_RX       isr_uart0_rx
 #define UART_1_ISR_RX       isr_usart1_rx
-#define UART_2_ISR_RX       isr_usart0_rx
+#define UART_2_ISR_RX       isr_usart4_rx
 #define UART_3_ISR_RX       isr_uart1_rx
 /** @} */
 
