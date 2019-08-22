@@ -208,7 +208,7 @@ static const uart_conf_t uart_config[] = {
         .dev = USART1,
         .rx_pin = GPIO_PIN(PD, 1),
         .tx_pin = GPIO_PIN(PD, 0),
-        .loc = USART_ROUTELOC0_TXLOC_LOC1 |
+        .loc = USART_ROUTELOC0_RXLOC_LOC1 |
                USART_ROUTELOC0_TXLOC_LOC1,
 #if EFM32_UART_MODES
         .mode = UART_MODE_8N1,
@@ -220,7 +220,7 @@ static const uart_conf_t uart_config[] = {
         .dev = USART4,
         .rx_pin = GPIO_PIN(PB, 8),
         .tx_pin = GPIO_PIN(PB, 7),
-        .loc = USART_ROUTELOC0_TXLOC_LOC0 |
+        .loc = USART_ROUTELOC0_RXLOC_LOC0 |
                USART_ROUTELOC0_TXLOC_LOC0,
 #if EFM32_UART_MODES
         .mode = UART_MODE_8N1,
