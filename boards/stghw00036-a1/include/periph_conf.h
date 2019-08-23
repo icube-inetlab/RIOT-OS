@@ -169,6 +169,18 @@ static const timer_conf_t timer_config[] = {
  *  * In order : to MCU, to Debug
  */
 static const uart_conf_t uart_config[] = {
+  {
+      .dev = USART3,
+      .rx_pin = GPIO_PIN(PD, 15),
+      .tx_pin = GPIO_PIN(PD, 14),
+      .loc = USART_ROUTELOC0_RXLOC_LOC6 |
+             USART_ROUTELOC0_TXLOC_LOC6,
+#if EFM32_UART_MODES
+      .mode = UART_MODE_8N1,
+#endif
+      .cmu = cmuClock_USART3,
+      .irq = USART3_RX_IRQn
+  },
     {
         .dev = USART0,
         .rx_pin = GPIO_PIN(PA, 1),
@@ -180,24 +192,13 @@ static const uart_conf_t uart_config[] = {
 #endif
         .cmu = cmuClock_USART0,
         .irq = USART0_RX_IRQn
-    },
-    {
-        .dev = USART3,
-        .rx_pin = GPIO_PIN(PD, 15),
-        .tx_pin = GPIO_PIN(PC, 14),
-        .loc = USART_ROUTELOC0_RXLOC_LOC6 |
-               USART_ROUTELOC0_TXLOC_LOC6,
-#if EFM32_UART_MODES
-        .mode = UART_MODE_8N1,
-#endif
-        .cmu = cmuClock_USART3,
-        .irq = USART3_RX_IRQn
     }
+
 };
 
 #define UART_NUMOF          ARRAY_SIZE(uart_config)
-#define UART_0_ISR_RX       isr_usart0_rx
-#define UART_1_ISR_RX       isr_usart3_rx
+#define UART_0_ISR_RX       isr_usart3_rx
+#define UART_1_ISR_RX       isr_usart0_rx
 /** @} */
 
 #ifdef __cplusplus

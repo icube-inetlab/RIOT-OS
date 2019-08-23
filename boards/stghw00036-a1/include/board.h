@@ -67,8 +67,9 @@ extern "C" {
  * @{
  */
  #define LED0_PIN            GPIO_PIN(PD, 13)
- #define LED1_PIN            GPIO_PIN(PD, 14)
- #define LED2_PIN            GPIO_PIN(PD, 15)
+  #define LED1_PIN           GPIO_UNDEF
+ //#define LED1_PIN            GPIO_PIN(PD, 14)
+ //#define LED2_PIN            GPIO_PIN(PD, 15)
 /** @} */
 
 /**
@@ -81,9 +82,9 @@ extern "C" {
 #define LED1_ON             gpio_set(LED1_PIN)
 #define LED1_OFF            gpio_clear(LED1_PIN)
 #define LED1_TOGGLE         gpio_toggle(LED1_PIN)
-#define LED2_ON             gpio_set(LED2_PIN)
+/*#define LED2_ON             gpio_set(LED2_PIN)
 #define LED2_OFF            gpio_clear(LED2_PIN)
-#define LED2_TOGGLE         gpio_toggle(LED2_PIN)
+#define LED2_TOGGLE         gpio_toggle(LED2_PIN)*/
 /** @} */
 
 /**
